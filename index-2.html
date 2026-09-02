@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CHEM//FUTURE — Химия науки будущего</title>
+<meta name="description" content="Интерактивный научный постер о химии и технологиях будущего.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--acid:#d8ff19;--bg:#070808;--panel:#0d1010;--line:#252a29;--muted:#89908e;--white:#f3f5f2}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.055;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:48px 48px;z-index:20}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 0,rgba(216,255,25,.09),transparent 35%);z-index:-1}
+a{color:inherit;text-decoration:none}.mono{font-family:"Space Mono",monospace}.acid{color:var(--acid)}
+.loader{position:fixed;inset:0;background:#050606;z-index:9999;display:grid;place-items:center;transition:.8s}.loader.hide{opacity:0;pointer-events:none}.loader-box{width:min(520px,82vw)}.loader-title{font-size:clamp(32px,8vw,75px);font-weight:900;letter-spacing:-4px}.loadline{height:3px;background:#262b2a;margin-top:22px;overflow:hidden}.loadline i{display:block;height:100%;width:0;background:var(--acid);animation:load 1.5s ease forwards}.loadmeta{display:flex;justify-content:space-between;color:#6e7572;font-size:11px;margin-top:10px}@keyframes load{to{width:100%}}
+.cursor{position:fixed;width:18px;height:18px;border:1px solid var(--acid);border-radius:50%;pointer-events:none;z-index:1000;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .15s,height .15s}@media(pointer:coarse){.cursor{display:none}}
+nav{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px);background:rgba(7,8,8,.55);z-index:100}.brand{font-weight:900;letter-spacing:2px}.brand b{color:var(--acid)}.navlinks{display:flex;gap:28px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#a4aaa7}.navlinks a:hover{color:var(--acid)}
+.progress{position:fixed;top:71px;left:0;width:0;height:2px;background:var(--acid);z-index:101}
+.hero{min-height:100svh;padding:140px 6vw 55px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.eyebrow{font-size:11px;letter-spacing:5px;color:var(--acid);font-weight:800;margin-bottom:24px}.hero h1{font-size:clamp(65px,13vw,190px);line-height:.78;letter-spacing:-9px;margin:0;font-weight:900;max-width:1100px}.hero h1 span{color:transparent;-webkit-text-stroke:1px #e8eee9}.hero-desc{max-width:620px;color:#929a96;font-size:17px;line-height:1.7;margin:38px 0}.hero-actions{display:flex;gap:12px;flex-wrap:wrap}.btn{border:1px solid #343a38;background:#101313;padding:14px 18px;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:white;transition:.25s}.btn:hover{background:var(--acid);color:#070808;border-color:var(--acid)}.hero .orb{position:absolute;width:480px;height:480px;right:5%;top:25%;border:1px solid rgba(216,255,25,.25);border-radius:50%;box-shadow:0 0 90px rgba(216,255,25,.07),inset 0 0 70px rgba(216,255,25,.05);animation:spin 18s linear infinite}.orb:before,.orb:after{content:"";position:absolute;inset:55px;border:1px solid rgba(216,255,25,.25);border-radius:50%;transform:rotate(60deg)}.orb:after{transform:rotate(-60deg)}.orb-dot{position:absolute;left:50%;top:50%;width:22px;height:22px;border-radius:50%;background:var(--acid);box-shadow:0 0 35px var(--acid);transform:translate(-50%,-50%)}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:850px){.hero .orb{opacity:.2;right:-220px}.navlinks{display:none}}
+section{padding:125px 6vw;border-top:1px solid var(--line);position:relative}.kicker{font:700 11px "Space Mono";letter-spacing:3px;color:var(--acid);margin-bottom:18px}.section-title{font-size:clamp(45px,7vw,105px);line-height:.88;letter-spacing:-5px;text-transform:uppercase;margin:0 0 65px;font-weight:900}.section-title span{color:var(--acid)}
+.reveal{opacity:0;transform:translateY(65px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}.reveal.visible{opacity:1;transform:none}.stagger>*{transition-delay:calc(var(--i)*90ms)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line)}.card{background:var(--panel);min-height:310px;padding:28px;position:relative;overflow:hidden;transition:.3s}.card:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-80px;bottom:-80px;background:var(--acid);filter:blur(45px);opacity:.06}.card:hover{transform:translateY(-8px);background:#111615}.card-num{font:11px "Space Mono";color:#69716e}.card h3{font-size:27px;text-transform:uppercase;margin-top:90px;margin-bottom:12px}.card p{color:#8d9591;line-height:1.6;font-size:14px}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.cards{grid-template-columns:1fr}.card{min-height:250px}.card h3{margin-top:60px}}
+.element-wrap{display:grid;grid-template-columns:1fr 2fr;gap:35px;align-items:start}.periodic{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.element{border:1px solid #303633;padding:15px;min-height:120px;cursor:pointer;position:relative;transition:.25s}.element:hover,.element.active{border-color:var(--acid);background:#111510;box-shadow:0 0 30px rgba(216,255,25,.07)}.element .n{font:10px "Space Mono";color:#68706c}.element strong{display:block;font-size:42px;margin-top:12px}.element small{color:#7c8581}.element-info{border-left:1px solid var(--line);padding:10px 0 10px 35px;min-height:300px}.element-info h3{font-size:50px;margin:0 0 10px}.element-info p{color:#8e9692;line-height:1.7;max-width:580px}.fact{display:inline-block;margin-top:20px;border:1px solid #333;padding:11px 14px;font:11px "Space Mono";color:var(--acid)}
+@media(max-width:800px){.element-wrap{grid-template-columns:1fr}.element-info{border-left:0;border-top:1px solid var(--line);padding:30px 0}}
+.future{background:#d8ff19;color:#080908;overflow:hidden}.future .kicker{color:#080908}.future .section-title span{color:#080908;-webkit-text-stroke:1px #080908}.future-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}.future-item{background:#080908;color:white;padding:35px;min-height:220px;transition:.3s}.future-item:hover{transform:scale(.98)}.future-item h3{font-size:28px;margin:70px 0 10px;text-transform:uppercase}.future-item p{color:#929895;line-height:1.6}.future-icon{font-size:35px;color:var(--acid)}@media(max-width:700px){.future-grid{grid-template-columns:1fr}}
+.gallery{display:grid;grid-template-columns:1.25fr .75fr .75fr;grid-auto-rows:260px;gap:10px}.photo{position:relative;overflow:hidden;background:#111}.photo:first-child{grid-row:span 2}.photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15);opacity:.72;transition:.6s}.photo:hover img{transform:scale(1.08);filter:grayscale(0) contrast(1.05);opacity:.95}.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.8))}.caption{position:absolute;bottom:18px;left:18px;z-index:2;font:11px "Space Mono";color:white}.caption b{color:var(--acid)}@media(max-width:700px){.gallery{grid-template-columns:1fr 1fr;grid-auto-rows:190px}.photo:first-child{grid-row:span 1;grid-column:span 2}}
+.cta{min-height:70vh;display:grid;place-items:center;text-align:center}.cta h2{font-size:clamp(55px,11vw,150px);letter-spacing:-8px;line-height:.78;margin:0;font-weight:900}.cta h2 span{color:var(--acid)}.cta p{color:#7e8783;max-width:600px;margin:35px auto 0;line-height:1.7}.footer{padding:35px 6vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#626a67;font:10px "Space Mono";letter-spacing:2px}.footer b{color:var(--acid)}
+#reaction{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(9px);z-index:500;display:none;place-items:center}.reaction-box{width:min(650px,90vw);border:1px solid #444;background:#090b0b;padding:25px;position:relative}.close{position:absolute;right:15px;top:12px;border:0;background:none;color:#aaa;font-size:25px;cursor:pointer}.reaction-screen{height:300px;background:#050606;position:relative;overflow:hidden;display:grid;place-items:center}.molecule{position:relative;width:80px;height:80px}.molecule:before{content:"";position:absolute;inset:25px;border-radius:50%;background:var(--acid);box-shadow:0 0 45px var(--acid)}.particle{position:absolute;width:10px;height:10px;background:white;border-radius:50%;left:35px;top:35px;animation:explode 1.2s ease-out forwards;animation-delay:var(--d)}@keyframes explode{to{transform:translate(var(--x),var(--y)) scale(.2);opacity:0}}.reaction-box h3{margin:20px 0 5px;font-size:25px}.reaction-box p{color:#7e8783;font-size:13px}.sound{position:fixed;bottom:22px;right:22px;z-index:120;background:#111515;border:1px solid #343a38;color:var(--acid);font:11px "Space Mono";padding:12px;cursor:pointer}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="loader"><div class="loader-box"><div class="loader-title">CHEM<span class="acid">//</span>FUTURE</div><div class="loadline"><i></i></div><div class="loadmeta"><span>INITIALIZING MOLECULES</span><span>100%</span></div></div></div>
+<div class="cursor"></div>
+<div class="progress"></div>
+<nav><a class="brand" href="#">CHEM<span>//</span><b>FUTURE</b></a><div class="navlinks"><a href="#about">01 / О НАУКЕ</a><a href="#elements">02 / АТОМЫ</a><a href="#future">03 / БУДУЩЕЕ</a></div></nav>
+
+<header class="hero">
+<div class="orb"><div class="orb-dot"></div></div>
+<div class="eyebrow mono">CHEMISTRY / SYSTEM 01 / 2026</div>
+<h1>ХИМИЯ<br><span>БУДУЩЕГО</span></h1>
+<p class="hero-desc">Наука, которая превращает атомы в технологии. От лекарств и новых материалов до чистой энергии и исследования космоса — будущее начинается на уровне молекул.</p>
+<div class="hero-actions"><a class="btn" href="#about">Исследовать ↓</a><button class="btn" id="reactionBtn">Запустить реакцию ⚗</button></div>
+</header>
+
+<section id="about">
+<div class="kicker reveal">01 / THE FOUNDATION</div>
+<h2 class="section-title reveal">МИР СОСТОИТ<br><span>ИЗ АТОМОВ</span></h2>
+<div class="cards stagger">
+<article class="card reveal" style="--i:0"><div class="card-num">FIELD / 01</div><h3>Молекулы</h3><p>Невидимые структуры, которые определяют свойства всего вокруг нас — от воды до сложных биологических систем.</p></article>
+<article class="card reveal" style="--i:1"><div class="card-num">FIELD / 02</div><h3>Реакции</h3><p>Когда связи между атомами меняются, появляются новые вещества, энергия и совершенно новые возможности.</p></article>
+<article class="card reveal" style="--i:2"><div class="card-num">FIELD / 03</div><h3>Энергия</h3><p>Химия помогает хранить и получать энергию эффективнее — от аккумуляторов до перспективного водородного топлива.</p></article>
+<article class="card reveal" style="--i:3"><div class="card-num">FIELD / 04</div><h3>Жизнь</h3><p>Дыхание, обмен веществ, ДНК и работа клеток — сложнейшие химические процессы происходят каждую секунду.</p></article>
+</div>
+</section>
+
+<section id="elements">
+<div class="kicker reveal">02 / PERIODIC DATA</div>
+<h2 class="section-title reveal">АТОМЫ —<br><span>СТРОИТЕЛЬНЫЕ БЛОКИ</span></h2>
+<div class="element-wrap reveal">
+<div class="periodic">
+<div class="element active" data-name="Водород" data-symbol="H" data-text="Самый лёгкий химический элемент. Водород рассматривается как важный элемент будущей энергетики." data-fact="№1 / самый распространённый элемент во Вселенной"><span class="n">01</span><strong>H</strong><small>ВОДОРОД</small></div>
+<div class="element" data-name="Углерод" data-symbol="C" data-text="Углерод способен образовывать огромное количество соединений и является фундаментом органической химии." data-fact="№6 / основа органической химии"><span class="n">06</span><strong>C</strong><small>УГЛЕРОД</small></div>
+<div class="element" data-name="Кислород" data-symbol="O" data-text="Ключевой элемент для дыхания и множества химических процессов. Его соединения встречаются повсюду на Земле." data-fact="№8 / около 21% атмосферы Земли"><span class="n">08</span><strong>O</strong><small>КИСЛОРОД</small></div>
+<div class="element" data-name="Литий" data-symbol="Li" data-text="Лёгкий металл, широко используемый в современных аккумуляторах и технологиях хранения энергии." data-fact="№3 / важен для Li-ion аккумуляторов"><span class="n">03</span><strong>Li</strong><small>ЛИТИЙ</small></div>
+<div class="element" data-name="Кремний" data-symbol="Si" data-text="Один из главных материалов современной электроники и солнечных технологий." data-fact="№14 / основа множества микросхем"><span class="n">14</span><strong>Si</strong><small>КРЕМНИЙ</small></div>
+<div class="element" data-name="Железо" data-symbol="Fe" data-text="Металл, который играет огромную роль в промышленности, строительстве и биологии." data-fact="№26 / один из важнейших промышленных металлов"><span class="n">26</span><strong>Fe</strong><small>ЖЕЛЕЗО</small></div>
+</div>
+<div class="element-info"><div class="mono acid">ELEMENT_SELECTED</div><h3 id="elName">Водород <span class="acid">H</span></h3><p id="elText">Самый лёгкий химический элемент. Водород рассматривается как важный элемент будущей энергетики.</p><div class="fact" id="elFact">№1 / самый распространённый элемент во Вселенной</div></div>
+</div>
+</section>
+
+<section class="future" id="future">
+<div class="kicker reveal">03 / NEXT GENERATION</div>
+<h2 class="section-title reveal">ХИМИЯ<br><span>МЕНЯЕТ МИР</span></h2>
+<div class="future-grid stagger">
+<div class="future-item reveal" style="--i:0"><div class="future-icon">✦</div><h3>Медицина</h3><p>Новые материалы, лекарства и методы диагностики помогают создавать более точные технологии лечения.</p></div>
+<div class="future-item reveal" style="--i:1"><div class="future-icon">◉</div><h3>Энергия</h3><p>Исследования аккумуляторов, топлива и материалов открывают путь к более эффективному хранению энергии.</p></div>
+<div class="future-item reveal" style="--i:2"><div class="future-icon">◇</div><h3>Материалы</h3><p>Умные покрытия, сверхпрочные материалы и новые структуры меняют производство и инженерию.</p></div>
+<div class="future-item reveal" style="--i:3"><div class="future-icon">⌁</div><h3>Космос</h3><p>Химия помогает создавать топливо, защитные материалы и системы жизнеобеспечения для будущих миссий.</p></div>
+</div>
+</section>
+
+<section>
+<div class="kicker reveal">04 / VISUAL RESEARCH</div>
+<h2 class="section-title reveal">КРАСОТА<br><span>НА МИКРОУРОВНЕ</span></h2>
+<div class="gallery reveal">
+<div class="photo"><img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=85" alt="Лаборатория"><div class="caption"><b>LAB_01</b> / ИССЛЕДОВАНИЕ</div></div>
+<div class="photo"><img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=900&q=85" alt="Научное исследование"><div class="caption"><b>LAB_02</b> / МАТЕРИЯ</div></div>
+<div class="photo"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85" alt="Лабораторное оборудование"><div class="caption"><b>LAB_03</b> / PRECISION</div></div>
+<div class="photo"><img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=900&q=85" alt="Микроскоп"><div class="caption"><b>LAB_04</b> / DISCOVERY</div></div>
+</div>
+</section>
+
+<section class="cta">
+<div>
+<div class="kicker reveal">05 / YOUR TURN</div>
+<h2 class="reveal">БУДУЩЕЕ<br><span>СОЗДАЁТСЯ</span></h2>
+<p class="reveal">Химия начинается с любопытства. Один вопрос может привести к открытию, которое изменит целую технологию.</p>
+<button class="btn reveal" id="randomBtn" style="margin-top:25px">Получить научный импульс ↗</button>
+</div>
+</section>
+
+<footer class="footer"><span>CHEM//FUTURE © 2026</span><span><b>MATTER IS THE FUTURE.</b></span></footer>
+
+<div id="reaction"><div class="reaction-box"><button class="close" id="closeReaction">×</button><div class="reaction-screen"><div class="molecule" id="molecule"></div></div><h3>РЕАКЦИЯ ЗАПУЩЕНА <span class="acid">⚡</span></h3><p>Связи меняются. Частицы движутся. Ничего не взрывается — мы просто красиво визуализируем химическую реакцию.</p></div></div>
+<button class="sound" id="soundBtn">◌ UI / SOUND OFF</button>
+<script>
+window.addEventListener('load',()=>setTimeout(()=>document.querySelector('.loader').classList.add('hide'),1650));
+const cursor=document.querySelector('.cursor');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+document.querySelectorAll('a,.btn,.element').forEach(x=>x.addEventListener('mouseenter',()=>{cursor.style.width='34px';cursor.style.height='34px'}));
+document.querySelectorAll('a,.btn,.element').forEach(x=>x.addEventListener('mouseleave',()=>{cursor.style.width='18px';cursor.style.height='18px'}));
+
+const progress=document.querySelector('.progress');
+addEventListener('scroll',()=>{let h=document.documentElement.scrollHeight-innerHeight;progress.style.width=(scrollY/h*100)+'%'});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(e=>obs.observe(e));
+
+document.querySelectorAll('.element').forEach(el=>el.onclick=()=>{
+ document.querySelectorAll('.element').forEach(x=>x.classList.remove('active'));el.classList.add('active');
+ el.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:350});
+ elName.innerHTML=el.dataset.name+' <span class="acid">'+el.dataset.symbol+'</span>';
+ elText.textContent=el.dataset.text;elFact.textContent=el.dataset.fact;
+});
+
+const modal=document.querySelector('#reaction'), molecule=document.querySelector('#molecule');
+function reaction(){
+ molecule.innerHTML='';
+ for(let i=0;i<26;i++){let p=document.createElement('i');p.className='particle';p.style.setProperty('--x',(Math.random()*460-230)+'px');p.style.setProperty('--y',(Math.random()*240-120)+'px');p.style.setProperty('--d',(Math.random()*.35)+'s');molecule.appendChild(p)}
+ modal.style.display='grid'; setTimeout(()=>molecule.innerHTML='',1400);
+}
+reactionBtn.onclick=reaction;closeReaction.onclick=()=>modal.style.display='none';modal.onclick=e=>{if(e.target===modal)modal.style.display='none'};
+
+const facts=[
+'Всё вокруг тебя состоит из химических веществ.',
+'ДНК — это огромная молекулярная структура.',
+'Химические связи определяют свойства материалов.',
+'Вода — простое соединение, но её свойства уникальны для жизни.',
+'Углерод способен создавать огромное разнообразие соединений.',
+'Химия объединяет физику, биологию, медицину и инженерное дело.'
+];
+randomBtn.onclick=()=>{randomBtn.textContent=facts[Math.floor(Math.random()*facts.length)];randomBtn.animate([{transform:'rotateX(0)'},{transform:'rotateX(360deg)'}],{duration:500})};
+
+let audio=null,osc=null,gain=null,on=false;
+soundBtn.onclick=()=>{
+ on=!on;
+ if(on){audio=new (window.AudioContext||window.webkitAudioContext)();osc=audio.createOscillator();gain=audio.createGain();osc.frequency.value=72;gain.gain.value=.025;osc.connect(gain).connect(audio.destination);osc.start();soundBtn.textContent='◉ UI / SOUND ON'}
+ else{osc?.stop();audio?.close();soundBtn.textContent='◌ UI / SOUND OFF'}
+};
+</script>
+</body>
+</html>
